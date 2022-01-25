@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:1.21.5
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/app/nginx/static
+      - media:/app/nginx/media
+    ports:
+      - "${APP_PORT}:80"
+
+  db:
+    image: postgres:14.1
+    expose:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+
+  backend:
+    build:
+      context: ./backend
+      target: prod
+    volumes:
+      - ./backend:/app/backend
+      - static:/app/backend/static
+      - media:/app/backend/media
+    environment:
+      - ENV=prod
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+      - DJANGO_SUPERUSER_USERNAME=${BACKEND_SU_USER}
+      - DJANGO_SUPERUSER_PASSWORD=${BACKEND_SU_PASS}
+      - DJANGO_SUPERUSER_EMAIL=${BACKEND_SU_EMAIL}
+      - TBA_API_KEY
+      - CSRF_TRUSTED_ORIGINS
+    expose:
+      - "${BACKEND_PORT}"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    volumes:
+      - ./frontend:/app/frontend
+      - next:/app/frontend/.next
+      - node_modules:/app/frontend/node_modules
+    expose:
+      - "3000"
+    environment:
+      - ENV=prod
+      - NEXT_PUBLIC_TBA_API_KEY=${TBA_API_KEY}
+
+
+volumes:
+  next:
+  node_modules:
+  pgdata:
+  static:
+  media:

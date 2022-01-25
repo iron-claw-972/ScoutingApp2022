@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14.1
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    volumes:
+      - ./backend:/app/backend
+      - static:/app/backend/static
+      - media:/app/backend/media
+    environment:
+      - ENV=dev
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+      - DJANGO_SUPERUSER_USERNAME=${BACKEND_SU_USER}
+      - DJANGO_SUPERUSER_PASSWORD=${BACKEND_SU_PASS}
+      - DJANGO_SUPERUSER_EMAIL=${BACKEND_SU_EMAIL}
+      - TBA_API_KEY
+      - CSRF_TRUSTED_ORIGINS
+    ports:
+      - "${BACKEND_PORT}:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    volumes:
+      - ./frontend:/app/frontend
+      - next:/app/frontend/.next
+      - node_modules:/app/frontend/node_modules
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      - ENV=dev
+      - NEXT_PUBLIC_TBA_API_KEY=${TBA_API_KEY}
+
+
+volumes:
+  next:
+  node_modules:
+  pgdata:
+  static:
+  media:
