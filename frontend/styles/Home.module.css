@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 2 2rem;
 }
 
 .main {
@@ -10,6 +10,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.tablestyle {
+  border: 2px solid black;
+  width: "80%";
+  height: 200px;
+  border-collapse: collapse;
+  margin: 5px;
+}
+
+.thstyle {
+  border: 1px solid black;
+  padding: 5px;
+  border-collapse: collapse;
+}
+
+.tdstyle {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  border-collapse: collapse;
 }
 
 .footer {

@@ -1,14 +1,17 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
         <title>Scouting App</title>
-        <meta name="description" content="Scouting App for FRC 2022 Water Game" />
+        <meta
+          name="description"
+          content="Scouting App for FRC 2022 Water Game"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -43,15 +46,27 @@ export default function Home() {
             <h2>Pit Display</h2>
             <p>Show other teams that our robot is better than their&apos;s</p>
           </a>
+
+          <Link href="/display/Data">
+            <a className={styles.card}>
+              <h2>Data Display</h2>
+              <p>See team data like you're iron m̶a̶n̶ person</p>
+            </a>
+          </Link>
         </div>
       </main>
 
       <footer className={styles.footer}>
         <span className={styles.logo}>
-          <Image src="/favicon.ico" alt="Scouting app icon" width={30} height={30} />
+          <Image
+            src="/favicon.ico"
+            alt="Scouting app icon"
+            width={30}
+            height={30}
+          />
         </span>
         2022 Water Game confirmed
       </footer>
     </div>
-  )
+  );
 }
