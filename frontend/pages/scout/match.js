@@ -1,32 +1,32 @@
-import Link from 'next/link'
-import * as Yup from 'yup';
-import Form from '../../components/Form';
-import TextInput from '../../components/FormFields/TextInput';
-import NumberInput from '../../components/FormFields/NumberInput';
-import SubmitButton from '../../components/FormFields/SubmitButton';
-import SelectInput from '../../components/FormFields/SelectInput';
-import { useState, useEffect } from 'react'
+import Link from "next/link";
+import * as Yup from "yup";
+import Form from "../../components/Form";
+import TextInput from "../../components/FormFields/TextInput";
+import NumberInput from "../../components/FormFields/NumberInput";
+import SubmitButton from "../../components/FormFields/SubmitButton";
+import SelectInput from "../../components/FormFields/SelectInput";
+import { useState, useEffect } from "react";
 
 const formSchema = {
   event_key: {
     type: "text",
     label: "Event Key",
-    required: true
+    required: true,
   },
   match_key: {
     type: "text",
     label: "Match Key",
-    required: true
+    required: true,
   },
   scouter_name: {
     type: "text",
     label: "Scouter Name",
-    required: true
+    required: true,
   },
   team_name: {
     type: "text",
     label: "Team Name",
-    required: false
+    required: false,
   },
   team_number: {
     type: "number",
@@ -34,7 +34,7 @@ const formSchema = {
     min: 1,
     max: 9999,
     defaultValue: 1,
-    required: true
+    required: true,
   },
   alliance_color: {
     type: "select",
@@ -42,15 +42,15 @@ const formSchema = {
     required: true,
     options: ["Red", "Blue"],
   },
-}
+};
 
 export default function MatchScoutingForm() {
-  const [formData, setFormData] = useState({})
-  const [validationSchema, setValidationSchema] = useState({})
+  const [formData, setFormData] = useState({});
+  const [validationSchema, setValidationSchema] = useState({});
 
   useEffect(() => {
-    initForm(formSchema)
-  }, [])
+    initForm(formSchema);
+  }, []);
 
   const initForm = (formSchema) => {
     let _formData = {};
@@ -72,47 +72,47 @@ export default function MatchScoutingForm() {
       }
 
       if (formSchema[key].required) {
-        _validationSchema[key] = _validationSchema[key].required('Required');
+        _validationSchema[key] = _validationSchema[key].required("Required");
       }
     }
 
     setFormData(_formData);
     setValidationSchema(Yup.object().shape({ ..._validationSchema }));
-  }
+  };
 
   const getFormElement = (elementName, elementSchema) => {
     const props = {
       name: elementName,
       ...elementSchema,
-      required: false
-    }
+      required: false,
+    };
 
     switch (elementSchema.type) {
       case "text":
-        return <TextInput {...props} />
+        return <TextInput {...props} />;
       case "number":
-        return <NumberInput {...props} />
+        return <NumberInput {...props} />;
       case "select":
-        return <SelectInput {...props} />
+        return <SelectInput {...props} />;
     }
-  }
+  };
 
   const handleSubmit = async (values) => {
-    const res = await fetch('/api/scout/match', {
+    const res = await fetch("/api/scout/match", {
       body: JSON.stringify(values),
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      method: 'POST'
-    })
+      method: "POST",
+    });
 
-    console.log(values)
+    console.log(values);
 
-    const statusCode = res.status
+    const statusCode = res.status;
     if (statusCode > 200 && statusCode < 299) {
       console.log("Success!");
     }
-  }
+  };
 
   return (
     <>
@@ -125,16 +125,11 @@ export default function MatchScoutingForm() {
         onSubmit={handleSubmit}
       >
         {Object.keys(formSchema).map((key, ind) => (
-          <div key={key}>
-            {getFormElement(key, formSchema[key])}
-          </div>
+          <div key={key}>{getFormElement(key, formSchema[key])}</div>
         ))}
 
-        <SubmitButton
-          title="Submit"
-        />
+        <SubmitButton title="Submit" />
       </Form>
-
 
       <h2>
         <Link href="/">
@@ -142,5 +137,5 @@ export default function MatchScoutingForm() {
         </Link>
       </h2>
     </>
-  )
+  );
 }
