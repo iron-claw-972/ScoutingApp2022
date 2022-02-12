@@ -20,6 +20,14 @@
   margin: 5px;
 }
 
+.specstyle {
+  border: 2px solid black;
+  width: "80%";
+  height: 50px;
+  border-collapse: collapse;
+  margin: 5px;
+}
+
 .thstyle {
   border: 1px solid black;
   padding: 5px;
@@ -90,6 +98,13 @@
 .logo {
   height: 1.5em;
   margin-right: 0.5rem;
+}
+
+.sponsor {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
 }
 
 @media (max-width: 600px) {
