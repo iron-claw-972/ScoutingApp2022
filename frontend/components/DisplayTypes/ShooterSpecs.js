@@ -4,7 +4,7 @@ export default function ShooterSpecs(props) {
   {
     return (
       <div>
-        <h4>Arm/Shooter Subsystem Specs</h4>
+        <h4>Cargo Subsystem Specs</h4>
         <table className={styles.specstyle}>
           <tr>
             <th className={styles.thstyle}>spex</th>
