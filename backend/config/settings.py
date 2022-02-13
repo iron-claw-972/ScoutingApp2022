@@ -29,14 +29,25 @@ SECRET_KEY = os.environ.get("BACKEND_SECRET_KEY", "secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('ENV').lower() == "dev"
 
+if DEBUG:
+    LOCALTUNNEL_SUBDOMAIN = os.environ.get("LOCALTUNNEL_SUBDOMAIN")
+
 ALLOWED_HOSTS = [
     'backend',
     'localhost',
 ]
 
+if DEBUG:
+    ALLOWED_HOSTS += [
+        f'{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
+    ]
+
 AUTH_USER_MODEL = "users.CustomUser"
 
 APPEND_SLASH = True
+
+BACKEND_PORT = os.environ.get("BACKEND_PORT")
+APP_PORT = os.environ.get("APP_PORT")
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -47,13 +58,23 @@ REST_FRAMEWORK = {
 REST_USE_JWT = True
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG
-CORS_ORIGIN_WHITELIST = (
+CORS_ORIGIN_WHITELIST = [ 
   'http://frontend:3000',
-)
+]
 
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+
+CSRF_TRUSTED_ORIGINS = [
+    f"http://localhost:{BACKEND_PORT}",
+    f"http://localhost:{APP_PORT}",
+] + list(filter(None, os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')))
+
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS += [
+        f'https://{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
+    ]
 
 TBA_API_KEY = os.environ.get("TBA_API_KEY")
+TBA_WEBHOOK_SECRET = os.environ.get("TBA_WEBHOOK_SECRET")
 
 
 # Application definition
@@ -70,9 +91,14 @@ INSTALLED_APPS = [
     # Apps
     'users',
     'scouting',
+    'tba',
 
     # Third-party packages
     'corsheaders',
+
+    'django_json_widget',
+
+    'solo',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -86,7 +112,9 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
-    INSTALLED_APPS.append("django_extensions")
+    INSTALLED_APPS += [
+        "django_extensions",
+    ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

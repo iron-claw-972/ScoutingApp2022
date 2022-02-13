@@ -43,6 +43,14 @@ export default function Home() {
             <h2>Pit Display</h2>
             <p>Show other teams that our robot is better than their&apos;s</p>
           </a>
+
+          <a
+            href="/scout/scan"
+            className={styles.card}
+          >
+            <h2>Scan Scouting Data</h2>
+            <p>Get to it, you lazy bastard</p>
+          </a>
         </div>
       </main>
 

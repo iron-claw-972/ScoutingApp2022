@@ -16,5 +16,8 @@ from django.urls import path, include
 from scouting import views
 
 urlpatterns = [
-    path("match/", views.MatchScoutingView.as_view(), name="match_scouting")
+    path('match/', include([
+        path("getFormSchema/", views.GetMatchScoutingFormSchemaView.as_view(), name="match_scouting_form_schema"),
+        path("", views.MatchScoutingView.as_view(), name="match_scouting")
+    ])),
 ]

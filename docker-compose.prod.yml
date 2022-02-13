@@ -38,7 +38,11 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=${BACKEND_SU_PASS}
       - DJANGO_SUPERUSER_EMAIL=${BACKEND_SU_EMAIL}
       - TBA_API_KEY
+      - TBA_WEBHOOK_SECRET
       - CSRF_TRUSTED_ORIGINS
+      - BACKEND_PORT
+      - APP_PORT
+
     expose:
       - "${BACKEND_PORT}"
     depends_on:

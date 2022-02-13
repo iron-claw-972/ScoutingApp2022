@@ -29,7 +29,11 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=${BACKEND_SU_PASS}
       - DJANGO_SUPERUSER_EMAIL=${BACKEND_SU_EMAIL}
       - TBA_API_KEY
+      - TBA_WEBHOOK_SECRET
       - CSRF_TRUSTED_ORIGINS
+      - LOCALTUNNEL_SUBDOMAIN
+      - BACKEND_PORT
+      - APP_PORT
     ports:
       - "${BACKEND_PORT}:8000"
     depends_on:
@@ -48,6 +52,14 @@ services:
     environment:
       - ENV=dev
       - NEXT_PUBLIC_TBA_API_KEY=${TBA_API_KEY}
+
+  localtunnel:
+    image: efrecon/localtunnel
+    links:
+      - backend
+    command: --local-host backend --port ${BACKEND_PORT} --subdomain=${LOCALTUNNEL_SUBDOMAIN}
+    depends_on:
+      - backend
 
 
 volumes:

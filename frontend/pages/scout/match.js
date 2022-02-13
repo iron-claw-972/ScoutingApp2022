@@ -1,140 +1,135 @@
 import Link from 'next/link'
-import * as Yup from 'yup';
-import Form from '../../components/Form';
-import TextInput from '../../components/FormFields/TextInput';
-import NumberInput from '../../components/FormFields/NumberInput';
-import SubmitButton from '../../components/FormFields/SubmitButton';
-import SelectInput from '../../components/FormFields/SelectInput';
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import DynamicForm from '../../components/DynamicForm'
+import QRCode from "react-qr-code"
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { v4 as uuidv4 } from "uuid";
 
-const formSchema = {
-  event_key: {
-    type: "text",
-    label: "Event Key",
-    required: true
-  },
-  match_key: {
-    type: "text",
+const formData = [ 
+  {
+    id: "match_key",
     label: "Match Key",
-    required: true
-  },
-  scouter_name: {
     type: "text",
+    validationType: "string",
+    validations: [
+      {
+        type: "required",
+        params: ["Match key is required"],
+      },
+    ],
+  },
+  {
+    id: "event_key",
+    label: "Event Key",
+    type: "text",
+    validationType: "string",
+    validations: [
+      {
+        type: "required",
+        params: ["Event key is required"],
+      },
+    ],
+  },
+  {
+    id: "scouter_name",
     label: "Scouter Name",
-    required: true
-  },
-  team_name: {
     type: "text",
-    label: "Team Name",
-    required: false
+    validationType: "string",
+    validations: [
+      {
+        type: "required",
+        params: ["Scouter name is required"],
+      },
+    ],
   },
-  team_number: {
-    type: "number",
+  {
+    id: "team_number",
     label: "Team Number",
-    min: 1,
-    max: 9999,
-    defaultValue: 1,
-    required: true
+    type: "number",
+    validationType: "number",
+    validations: [
+      {
+        type: "required",
+        params: ["Team number is required"],
+      },
+      {
+        type: "integer",
+        params: ["Team number must be an integer"],
+      },
+      {
+        type: "min",
+        params: [1, "Team number must be >= 1"],
+      },
+      {
+        type: "max",
+        params: [9999, "Team number cannot exceed 9999"],
+      },
+    ],
   },
-  alliance_color: {
-    type: "select",
-    label: "Alliance Color",
-    required: true,
-    options: ["Red", "Blue"],
+  {
+    id: "driver_station",
+    label: "Driver Station",
+    type: "radio",
+    validationType: "string",
+    options: ["Red 1", "Red 2", "Red 3", "Blue 1", "Blue 2", "Blue 3"],
+    validations: [
+      {
+        type: "required",
+        params: ["Driver station position is required"],
+      },
+    ],
   },
-}
+]
 
 export default function MatchScoutingForm() {
-  const [formData, setFormData] = useState({})
-  const [validationSchema, setValidationSchema] = useState({})
+  const [formSchema, setFormSchema] = useState(formData);
+  const [values, setValues] = useState({});
+
+  const router = useRouter()
+
+  const getFormSchema = () => {
+    axios.get('/api/scout/match/getFormSchema', JSON.stringify(values)).then((res) => {
+      // console.log(res.data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   useEffect(() => {
-    initForm(formSchema)
-  }, [])
+    getFormSchema()
+  })
 
-  const initForm = (formSchema) => {
-    let _formData = {};
-    let _validationSchema = {};
+  const handleSubmit = (val) => {
+    setValues({id: uuidv4(), ...val})
+  };
 
-    for (var key of Object.keys(formSchema)) {
-      _formData[key] = formSchema[key].defaultValue || "";
-
-      switch (formSchema[key].type) {
-        case "text":
-          _validationSchema[key] = Yup.string();
-          break;
-        case "number":
-          _validationSchema[key] = Yup.number().positive();
-          break;
-        case "select":
-          _validationSchema[key] = Yup.string();
-          break;
-      }
-
-      if (formSchema[key].required) {
-        _validationSchema[key] = _validationSchema[key].required('Required');
-      }
-    }
-
-    setFormData(_formData);
-    setValidationSchema(Yup.object().shape({ ..._validationSchema }));
-  }
-
-  const getFormElement = (elementName, elementSchema) => {
-    const props = {
-      name: elementName,
-      ...elementSchema,
-      required: false
-    }
-
-    switch (elementSchema.type) {
-      case "text":
-        return <TextInput {...props} />
-      case "number":
-        return <NumberInput {...props} />
-      case "select":
-        return <SelectInput {...props} />
-    }
-  }
-
-  const handleSubmit = async (values) => {
-    const res = await fetch('/api/scout/match', {
-      body: JSON.stringify(values),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    })
-
+  useEffect(() => {
     console.log(values)
+    axios.post('/api/scout/match', JSON.stringify(values)).then((res) => {
+      // router.push("/")
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [values])
 
-    const statusCode = res.status
-    if (statusCode > 200 && statusCode < 299) {
-      console.log("Success!");
-    }
+  const handleFormChange = (e) => {
+    var valuesCopy = {}
+    Object.assign(valuesCopy, values)
+    valuesCopy[e.target.name] = e.target.value
   }
 
   return (
     <>
       <h1>Scout a match</h1>
 
-      <Form
-        enableReinitialize
-        initialValues={formData}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {Object.keys(formSchema).map((key, ind) => (
-          <div key={key}>
-            {getFormElement(key, formSchema[key])}
-          </div>
-        ))}
+      <DynamicForm
+        fields={formSchema}
+        cbSubmit={handleSubmit}
+        onFormChange={handleFormChange}
+      />
 
-        <SubmitButton
-          title="Submit"
-        />
-      </Form>
-
+      <QRCode value={JSON.stringify(values)} size={100} style={{ margin: 10 }} />
 
       <h2>
         <Link href="/">
