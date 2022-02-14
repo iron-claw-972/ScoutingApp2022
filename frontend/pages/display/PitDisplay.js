@@ -4,7 +4,7 @@ import ShooterSpecs from "../../components/DisplayTypes/ShooterSpecs";
 import Sponsors from "../../components/DisplayTypes/Sponsors";
 import Textbox from "../../components/DisplayTypes/Textbox";
 
-export default function PitDisplay(prop) {
+export default function PitDisplay(props) {
   const autoHeading = "Auto Capabilities";
   const autoCapabilities =
     "Deposit preloaded ball, intake 1-2 more balls, and deposit them.";
