@@ -6,112 +6,39 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from "uuid";
 
-const formData = [ 
-  {
-    id: "match_key",
-    label: "Match Key",
-    type: "text",
-    validationType: "string",
-    validations: [
-      {
-        type: "required",
-        params: ["Match key is required"],
-      },
-    ],
-  },
-  {
-    id: "event_key",
-    label: "Event Key",
-    type: "text",
-    validationType: "string",
-    validations: [
-      {
-        type: "required",
-        params: ["Event key is required"],
-      },
-    ],
-  },
-  {
-    id: "scouter_name",
-    label: "Scouter Name",
-    type: "text",
-    validationType: "string",
-    validations: [
-      {
-        type: "required",
-        params: ["Scouter name is required"],
-      },
-    ],
-  },
-  {
-    id: "team_number",
-    label: "Team Number",
-    type: "number",
-    validationType: "number",
-    validations: [
-      {
-        type: "required",
-        params: ["Team number is required"],
-      },
-      {
-        type: "integer",
-        params: ["Team number must be an integer"],
-      },
-      {
-        type: "min",
-        params: [1, "Team number must be >= 1"],
-      },
-      {
-        type: "max",
-        params: [9999, "Team number cannot exceed 9999"],
-      },
-    ],
-  },
-  {
-    id: "driver_station",
-    label: "Driver Station",
-    type: "radio",
-    validationType: "string",
-    options: ["Red 1", "Red 2", "Red 3", "Blue 1", "Blue 2", "Blue 3"],
-    validations: [
-      {
-        type: "required",
-        params: ["Driver station position is required"],
-      },
-    ],
-  },
-]
-
 export default function MatchScoutingForm() {
-  const [formSchema, setFormSchema] = useState(formData);
+  const [formSchema, setFormSchema] = useState([]);
   const [values, setValues] = useState({});
 
   const router = useRouter()
 
   const getFormSchema = () => {
-    axios.get('/api/scout/match/getFormSchema', JSON.stringify(values)).then((res) => {
-      // console.log(res.data)
+    axios.get('/api/scout/match/getFormSchema').then((res) => {
+      setFormSchema(res.data)
+      localStorage.setItem("match_form_schema", JSON.stringify(res.data))
     }).catch((err) => {
-      console.log(err)
+      var match_form_schema_str = localStorage.getItem("match_form_schema")
+      if (match_form_schema_str) {
+        setFormSchema(JSON.parse(match_form_schema_str))
+      } else {
+        console.log("No form schema found")
+      }
     })
   }
 
   useEffect(() => {
     getFormSchema()
-  })
+  }, [])
 
   const handleSubmit = (val) => {
     setValues({id: uuidv4(), ...val})
-  };
-
-  useEffect(() => {
-    console.log(values)
     axios.post('/api/scout/match', JSON.stringify(values)).then((res) => {
-      // router.push("/")
+      router.push("/")
     }).catch((err) => {
+      console.log("Unable to submit data")
       console.log(err)
     })
-  }, [values])
+  };
 
   const handleFormChange = (e) => {
     var valuesCopy = {}
@@ -120,7 +47,7 @@ export default function MatchScoutingForm() {
   }
 
   return (
-    <>
+    <div className="">
       <h1>Scout a match</h1>
 
       <DynamicForm
@@ -129,13 +56,7 @@ export default function MatchScoutingForm() {
         onFormChange={handleFormChange}
       />
 
-      <QRCode value={JSON.stringify(values)} size={100} style={{ margin: 10 }} />
-
-      <h2>
-        <Link href="/">
-          <a>Back to home</a>
-        </Link>
-      </h2>
-    </>
+      <QRCode value={JSON.stringify(values)} style={{ margin: 10 }} />
+    </div>
   )
 }

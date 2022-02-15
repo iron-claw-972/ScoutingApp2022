@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import json
 from scouting.serializers import TeamSerializer, MatchDataSerializer
+from scouting.models import FormSchemas
 
 class StatusView(APIView):
     def get(self, request):
@@ -17,6 +18,7 @@ class MatchScoutingView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class GetMatchScoutingFormSchemaView(APIView):
+class MatchScoutingFormSchemaView(APIView):
     def get(self, request):
-        return Response(1, status=status.HTTP_200_OK)
+        match_form_schema = FormSchemas.get_solo().match_form_schema
+        return Response(match_form_schema, status=status.HTTP_200_OK)

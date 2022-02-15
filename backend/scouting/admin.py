@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db import models
-from scouting.models import Event, Team, Match, MatchData
+from scouting.models import Event, Team, Match, MatchData, FormSchemas
+from solo.admin import SingletonModelAdmin
 from django_json_widget.widgets import JSONEditorWidget
 
 @admin.register(Team)
@@ -23,6 +24,12 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget},
+    }
+
+@admin.register(FormSchemas)
+class FormSchemasAdmin(SingletonModelAdmin):
     formfield_overrides = {
         models.JSONField: {'widget': JSONEditorWidget},
     }

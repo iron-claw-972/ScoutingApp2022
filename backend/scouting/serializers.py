@@ -11,8 +11,6 @@ class MatchDataSerializer(serializers.Serializer):
     def create(self, validated_data):
         data = self.initial_data
 
-        id = data.pop("id")
-
         team_number = data.pop("team_number")
         team, _ = Team.objects.get_or_create(
             team_number=team_number,
@@ -37,12 +35,9 @@ class MatchDataSerializer(serializers.Serializer):
             }
         )
 
-        match_data, _ = MatchData.objects.filter(
-            match=match,
-            event=event,
-            team=team
-        ).get_or_create(
-            team=team,
+        id = data.pop("id")
+        match_data, _ = MatchData.objects.get_or_create(
+            id=id,
             defaults={
                 "id": id,
                 "match": match,

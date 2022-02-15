@@ -23,34 +23,12 @@ export default function Home() {
             </a>
           </Link>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Pit Scout</h2>
-            <p>Collect data on a robot&apos;s specs in the pit</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Team Pages</h2>
-            <p>View scouting and TBA data about FRC teams</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Pit Display</h2>
-            <p>Show other teams that our robot is better than their&apos;s</p>
-          </a>
-
-          <a
-            href="/scout/scan"
-            className={styles.card}
-          >
-            <h2>Scan Scouting Data</h2>
-            <p>Get to it, you lazy bastard</p>
-          </a>
+          <Link href="/scout/scan">
+            <a className={styles.card}>
+              <h2>Scan Scouting Data</h2>
+              <p>Get to it, you lazy bastard</p>
+            </a>
+          </Link>
         </div>
       </main>
 
