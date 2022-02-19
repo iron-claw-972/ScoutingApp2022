@@ -39,7 +39,7 @@ export default function Home() {
             <p>View scouting and TBA data about FRC teams</p>
           </a>
 
-          <a href="/display/PitDisplay" className={styles.card}>
+          <a href="/scout/PitDisplay" className={styles.card}>
             <h2>Pit Display</h2>
             <p>Show other teams that our robot is better than their&apos;s</p>
           </a>
