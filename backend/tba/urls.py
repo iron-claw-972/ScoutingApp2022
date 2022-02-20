@@ -16,5 +16,5 @@ from django.urls import path, include
 from tba import views
 
 urlpatterns = [
-    path("webhook/", views.WebhookView.as_view(), name="webhook")
+    path("getNextMatch/", views.NextMatchView.as_view(), name="next_match")
 ]

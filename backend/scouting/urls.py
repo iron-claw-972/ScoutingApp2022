@@ -18,6 +18,7 @@ from scouting import views
 urlpatterns = [
     path('match/', include([
         path("getFormSchema/", views.MatchScoutingFormSchemaView.as_view(), name="match_scouting_form_schema"),
+        path("getCurrentEvent/", views.CurrentEventView.as_view(), name="current_event"),
         path("", views.MatchScoutingView.as_view(), name="match_scouting")
     ])),
 ]

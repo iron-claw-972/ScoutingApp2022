@@ -18,15 +18,19 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from scouting import views as scouting_views
+from tba import views as tba_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name="admin"),
     path('api/', include([
         path('status/', scouting_views.StatusView.as_view(), name="status"),
         path('scout/', include('scouting.urls')),
         path('users/', include('users.urls')),
+        path('tba/', include('tba.urls')),
     ])),
-    path('tba/', include('tba.urls')),
+    path('tba/', include([
+        path('webhook/', tba_views.WebhookView.as_view(), name="tba_webhook"),
+    ])),
 ]
 
 if settings.DEBUG:

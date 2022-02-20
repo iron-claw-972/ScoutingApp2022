@@ -28,6 +28,7 @@ function DynamicForm(props) {
     initialValues: initialValues,
     validationSchema: validateSchema,
     onSubmit: cbSubmit,
+    enableReinitialize: true,
   })
 
   return (

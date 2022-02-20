@@ -49,6 +49,9 @@ APPEND_SLASH = True
 BACKEND_PORT = os.environ.get("BACKEND_PORT")
 APP_PORT = os.environ.get("APP_PORT")
 
+FRC_TEAM_NUMBER = int(os.environ.get("FRC_TEAM_NUMBER"))
+FRC_YEAR = int(os.environ.get("FRC_YEAR"))
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
@@ -62,6 +65,7 @@ CORS_ORIGIN_WHITELIST = [
   'http://frontend:3000',
 ]
 
+DEFAULT_CURRENT_EVENT_KEY = os.environ.get('DEFAULT_CURRENT_EVENT_KEY')
 
 CSRF_TRUSTED_ORIGINS = [
     f"http://localhost:{BACKEND_PORT}",

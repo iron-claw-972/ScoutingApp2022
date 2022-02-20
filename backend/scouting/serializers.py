@@ -19,19 +19,19 @@ class MatchDataSerializer(serializers.Serializer):
             }
         )
 
-        event_key = data.pop("event_key")
+        match_key = data.pop("match_key")
+        event_key = match_key.split("_")[0]
         event, _ = Event.objects.get_or_create(
             event_key=event_key,
             defaults={
                 "event_key": event_key
             }
         )
-
-        match_key = data.pop("match_key")
         match, _ = Match.objects.get_or_create(
             match_key=match_key,
             defaults={
-                "match_key": match_key
+                "match_key": match_key,
+                "event": event
             }
         )
 
@@ -50,6 +50,8 @@ class MatchDataSerializer(serializers.Serializer):
         return match_data
 
     def validate(self, data):
+        if MatchData.objects.filter(id=data.get("id")).exists():
+            raise serializers.ValidationError("Data exists")
         return data
 
     class Meta:

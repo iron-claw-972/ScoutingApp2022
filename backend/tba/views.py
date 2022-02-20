@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.conf import settings
 from tba.models import Notification, LatestData
+from tba.utils import get_next_match
 import json
 import hashlib
 
@@ -18,3 +19,13 @@ class WebhookView(APIView):
             latest_data.next_match = data.get("message_data")
             latest_data.save()
         return Response(status=204)
+
+class NextMatchView(APIView):
+    def get(self, request):
+        latest_data = LatestData.get_solo()
+        next_match = latest_data.next_match.get("match_key")
+        if not next_match:
+            next_match = get_next_match()
+            if not next_match:
+                return Response(status=404)
+        return Response({'next_match': next_match}, status=200)
