@@ -4,24 +4,38 @@ import { Document, Page, pdfjs } from "react-pdf";
 
 const PdfViewer = () => {
   const [numPages, setNumPages] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
 
   function onDocumentLoadSuccess({ numPages: nextNumPages }) {
     setNumPages(nextNumPages);
   }
 
   pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  function onUpClick() {
+    if (pageNum < numPages) {
+      setPageNum(pageNum + 1);
+    }
+  }
 
+  function onDownClick() {
+    if (pageNum > 1) {
+      setPageNum(pageNum - 1);
+    }
+  }
   return (
-    <Document file="../TechBinder.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-      {Array.from({ length: numPages }, (_, index) => (
+    <div>
+      <button onClick={onDownClick}>prev</button>
+
+      <button onClick={onUpClick}>next</button>
+
+      <Document file="../TechBinder.pdf" onLoadSuccess={onDocumentLoadSuccess}>
         <Page
-          key={`page_${index + 1}`}
-          pageNumber={index + 1}
+          pageNumber={pageNum}
           renderAnnotationLayer={false}
           renderTextLayer={false}
         />
-      ))}
-    </Document>
+      </Document>
+    </div>
   );
 };
 
