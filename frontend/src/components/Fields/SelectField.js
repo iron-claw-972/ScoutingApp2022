@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-import { FieldContainer, Select } from "./_fieldStyles";
 
 function SelectField(props) {
   return (
-    <FieldContainer>
-      <div className="label">{props.label}</div>
-      <Select
+    <div>
+      <label className="fw-bold">{props.label}</label>
+      <select
         name={props.name}
         defaultValue={props.value}
         onBlur={props.handleBlur}
@@ -19,11 +18,11 @@ function SelectField(props) {
             </option>
           );
         })}
-      </Select>
+      </select>
       {props.error && props.touched[props.name] && (
-        <div className="error">{props.error}</div>
+        <div className="text-danger">{props.error}</div>
       )}
-    </FieldContainer>
+    </div>
   );
 }
 

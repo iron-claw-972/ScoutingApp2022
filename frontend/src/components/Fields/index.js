@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import TextField from "./TextField";
+import HiddenField from "./HiddenField";
 import NumberField from "./NumberField";
 import SelectField from "./SelectField";
 import TextAreaField from "./TextAreaField";
@@ -9,6 +10,7 @@ import UploadField from "./UploadField";
 
 const fieldMap = {
   text: TextField,
+  hidden: HiddenField,
   number: NumberField,
   select: SelectField,
   textarea: TextAreaField,

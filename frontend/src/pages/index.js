@@ -23,10 +23,31 @@ export default function Home() {
             </a>
           </Link>
 
+          <Link href="/scout/pit">
+            <a className={styles.card}>
+              <h2>Pit Scout</h2>
+              <p>Collect data on a robot in the pit</p>
+            </a>
+          </Link>
+
           <Link href="/scout/scan">
             <a className={styles.card}>
               <h2>Scan Scouting Data</h2>
               <p>Get to it, you lazy bastard</p>
+            </a>
+          </Link>
+
+          <Link href="/display/match">
+            <a className={styles.card}>
+              <h2>Display Match Scouting Data</h2>
+              <p>Lookie</p>
+            </a>
+          </Link>
+
+          <Link href="/display/pit">
+            <a className={styles.card}>
+              <h2>Display Pit Scouting Data</h2>
+              <p>Lookie</p>
             </a>
           </Link>
         </div>

@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import { FieldContainer, TextArea } from "./_fieldStyles";
 
 function TextAreaField(props) {
   return (
-    <FieldContainer>
-      <div className="label">{props.label}</div>
-      <TextArea
+    <div>
+      <label className="fw-bold">{props.label}</label>
+      <textarea
+        className="form-control"
         type="text"
         name={props.name}
         value={props.value}
@@ -14,9 +14,9 @@ function TextAreaField(props) {
         onChange={props.onChange}
       />
       {props.error && props.touched[props.name] && (
-        <div className="error">{props.error}</div>
+        <div className="text-danger">{props.error}</div>
       )}
-    </FieldContainer>
+    </div>
   );
 }
 

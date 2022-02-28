@@ -1,17 +1,24 @@
 BASE_MATCH_FORM_SCHEMA = [
     {
+        "id": "id",
+        "label": "ID",
+        "type": "hidden",
+        "validationType": "string",
+        "validations": [{"type": "required", "params": ["Required field"]}],
+    },
+    {
         "id": "match_key",
         "label": "Match Key",
         "type": "text",
         "validationType": "string",
-        "validations": [{"type": "required", "params": ["Match key is required"]}],
+        "validations": [{"type": "required", "params": ["Required field"]}],
     },
     {
         "id": "scouter_name",
         "label": "Scouter Name",
         "type": "text",
         "validationType": "string",
-        "validations": [{"type": "required", "params": ["Scouter name is required"]}],
+        "validations": [{"type": "required", "params": ["Required field"]}],
     },
     {
         "id": "team_number",
@@ -19,10 +26,10 @@ BASE_MATCH_FORM_SCHEMA = [
         "type": "number",
         "validationType": "number",
         "validations": [
-            {"type": "required", "params": ["Team number is required"]},
-            {"type": "integer", "params": ["Team number must be an integer"]},
-            {"type": "min", "params": [1, "Team number must be >= 1"]},
-            {"type": "max", "params": [9999, "Team number cannot exceed 9999"]},
+            {"type": "required", "params": ["Required field"]},
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [1, "Must be positive"]},
+            {"type": "max", "params": [9999, "Cannot exceed 9999"]},
         ],
     },
     {
@@ -32,10 +39,49 @@ BASE_MATCH_FORM_SCHEMA = [
         "validationType": "string",
         "options": ["Red 1", "Red 2", "Red 3", "Blue 1", "Blue 2", "Blue 3"],
         "validations": [
-            {"type": "required", "params": ["Driver station position is required"]}
+            {"type": "required", "params": ["Required field"]}
         ],
     },
 ]
+
+DEFAULT_MATCH_FORM_SCHEMA = [
+    {
+        "id": "auto_high_scored",
+        "label": "Cargo scored in Upper Hub during Auto",
+        "type": "number",
+        "value": "0",
+        "validationType": "number",
+        "validations": [
+            {"type": "required", "params": ["Required field"]},
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [0, "Must be positive"]},
+        ],
+    },
+    {
+        "id": "auto_low_scored",
+        "label": "Cargo scored in Lower Hub during Auto",
+        "type": "number",
+        "value": "0",
+        "validationType": "number",
+        "validations": [
+            {"type": "required", "params": ["Required field"]},
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [0, "Must be positive"]},
+        ],
+    },
+    {
+        "id": "auto_notes",
+        "label": "Notes for Auto",
+        "type": "textarea",
+        "validationType": "string",
+        "validations": [
+            {"type": "required", "params": ["Required field"]},
+        ],
+    },
+]
+
+def get_default_match_form_schema():
+    return DEFAULT_MATCH_FORM_SCHEMA
 
 BASE_PIT_FORM_SCHEMA = [
     {
@@ -43,14 +89,14 @@ BASE_PIT_FORM_SCHEMA = [
         "label": "Event Key",
         "type": "text",
         "validationType": "string",
-        "validations": [{"type": "required", "params": ["Event key is required"]}],
+        "validations": [{"type": "required", "params": ["Required field"]}],
     },
     {
         "id": "scouter_name",
         "label": "Scouter Name",
         "type": "text",
         "validationType": "string",
-        "validations": [{"type": "required", "params": ["Scouter name is required"]}],
+        "validations": [{"type": "required", "params": ["Required field"]}],
     },
     {
         "id": "team_number",
@@ -58,10 +104,49 @@ BASE_PIT_FORM_SCHEMA = [
         "type": "number",
         "validationType": "number",
         "validations": [
-            {"type": "required", "params": ["Team number is required"]},
-            {"type": "integer", "params": ["Team number must be an integer"]},
-            {"type": "min", "params": [1, "Team number must be >= 1"]},
-            {"type": "max", "params": [9999, "Team number cannot exceed 9999"]},
+            {"type": "required", "params": ["Required field"]},
+            {"type": "integer", "params": ["Must be integer"]},
+            {"type": "min", "params": [1, "Must be positive"]},
+            {"type": "max", "params": [9999, "Exceeds maximum limit"]},
         ],
     },
 ]
+
+DEFAULT_PIT_FORM_SCHEMA = [
+    {
+        "id": "auto_high_scored",
+        "label": "Cargo scored in Upper Hub during Auto",
+        "type": "number",
+        "value": "0",
+        "validationType": "number",
+        "validations": [
+            {"type": "required", "params": ["Required field"]},
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [0, "Must be positive"]},
+        ],
+    },
+    {
+        "id": "auto_low_scored",
+        "label": "Cargo scored in Lower Hub during Auto",
+        "type": "number",
+        "value": "0",
+        "validationType": "number",
+        "validations": [
+            {"type": "required", "params": ["Required field"]},
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [0, "Must be positive"]},
+        ],
+    },
+    {
+        "id": "auto_notes",
+        "label": "Notes for Auto",
+        "type": "textarea",
+        "validationType": "string",
+        "validations": [
+            {"type": "required", "params": ["Required field"]},
+        ],
+    },
+]
+
+def get_default_pit_form_schema():
+    return DEFAULT_PIT_FORM_SCHEMA

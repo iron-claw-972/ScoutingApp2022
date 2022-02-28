@@ -6,11 +6,6 @@ import Fields from "./Fields";
 import { createYupSchema } from "../utils/yupSchemaCreator";
 import { useEffect } from "react";
 
-const Button = styled.button`
-  padding: 4px;
-  width: 190px;
-`;
-
 function DynamicForm(props) {
   const { fields, cbSubmit } = props;
 
@@ -33,11 +28,11 @@ function DynamicForm(props) {
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
+      <form className="col-10 p-2 mx-auto" onSubmit={formik.handleSubmit}>
         <Fields fields={fields} formikProps={formik} onFormChange={props.onFormChange} />
-        <Button type="submit">
+        <button type="submit" className="btn btn-success my-2">
           Submit
-        </Button>
+        </button>
       </form>
     </>
   );

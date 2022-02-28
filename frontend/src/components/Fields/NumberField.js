@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import { FieldContainer, Input } from "./_fieldStyles";
 
 function NumberField(props) {
   return (
-    <FieldContainer>
-      <div className="label">{props.label}</div>
-      <Input
+    <div>
+      <label className="fw-bold">{props.label}</label>
+      <input
+        className="form-control"
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
@@ -14,9 +14,9 @@ function NumberField(props) {
         onChange={props.onChange}
       />
       {props.error && props.touched[props.name] && (
-        <div className="error">{props.error}</div>
+        <div className="text-danger">{props.error}</div>
       )}
-    </FieldContainer>
+    </div>
   );
 }
 

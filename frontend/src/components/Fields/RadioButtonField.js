@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
-import { FieldContainer, Label } from "./_fieldStyles";
 
 function RadioButtonField(props) {
   return (
-    <FieldContainer>
-      <div className="label">{props.label}</div>
+    <div className="form-check-inline">
+      <label className="fw-bold">{props.label}</label>
+      <br />
       {props.options.map((opt, index) => {
         return (
-          <Label key={index}>
+          <label key={index} className="form-check-label mx-1">
             <input
+              className="form-check-input"
               type="radio"
               name={props.name}
               value={opt}
@@ -16,14 +17,14 @@ function RadioButtonField(props) {
               onBlur={props.handleBlur}
               onChange={props.onChange}
             />
-            {opt}
-          </Label>
+            &nbsp;{opt}
+          </label>
         );
       })}
       {props.error && props.touched[props.name] && (
-        <div className="error">{props.error}</div>
+        <div className="text-danger">{props.error}</div>
       )}
-    </FieldContainer>
+    </div>
   );
 }
 

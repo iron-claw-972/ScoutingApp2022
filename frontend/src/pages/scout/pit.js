@@ -7,13 +7,13 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from "uuid";
 import { Data, datas } from '../../utils/localstorage'
 
-export default function MatchScoutingForm() {
+export default function PitScoutingForm() {
   const [formSchema, setFormSchema] = useState([]);
   const [values, setValues] = useState({});
   const [submitStatus, setSubmitStatus] = useState();
 
-  var nextMatch = "";
-  var data = datas.match
+  var currentEvent = "";
+  var data = datas.pit
 
   const router = useRouter()
   const routerQuery = useRef(router.query)
@@ -28,21 +28,21 @@ export default function MatchScoutingForm() {
       }
     }
 
-    const getNextMatch = async () => {
-      axios.get('/api/tba/getNextMatch').then((res) => {
-        var next_match = res.data.next_match
-        nextMatch = next_match
-        localStorage.setItem("next_match", next_match)
+    const getCurrentEvent = async () => {
+      axios.get('/api/scout/getCurrentEvent').then((res) => {
+        var current_event = res.data.current_event
+        currentEvent = current_event
+        localStorage.setItem("current_event", current_event)
       }).catch((err) => {
-        console.log("No match key found")
+        console.log("No event key found")
       })
-      var next_match = localStorage.getItem("next_match")
-      if (next_match) {
-        nextMatch = next_match
+      var current_event = localStorage.getItem("current_event")
+      if (current_event) {
+        currentEvent = current_event
       }
     }
 
-    getNextMatch()
+    getCurrentEvent()
     getFormSchema()
   }, [])
 
@@ -51,8 +51,8 @@ export default function MatchScoutingForm() {
     newFormSchema = newFormSchema.map(field => field.id == "id" && !field.value ? {...field, value: uuidv4()} : field)
     if (Object.keys(routerQuery.current).length !== 0) {
       newFormSchema = data.addInitialValues(newFormSchema, routerQuery.current)
-    } else if (nextMatch) {
-      newFormSchema = newFormSchema.map(field => field.id == "match_key" ? {...field, value: nextMatch} : field)
+    } else if (currentEvent) {
+      newFormSchema = newFormSchema.map(field => field.id == "event_key" ? {...field, value: currentEvent} : field)
     }
     return newFormSchema
   }
@@ -62,7 +62,7 @@ export default function MatchScoutingForm() {
       routerQuery.current = router.query
     }
     setFormSchema(processFormSchema(formSchema))
-  }, [nextMatch, router.query])
+  }, [currentEvent, router.query])
 
   const handleSubmit = async (val) => {
     var data = {...val}
@@ -89,7 +89,7 @@ export default function MatchScoutingForm() {
 
   return (
     <div className="">
-      <h1 className="text-center">Scout a match</h1>
+      <h1 className="text-center">Pit scout</h1>
 
       { formSchema.length > 0 &&
         <DynamicForm

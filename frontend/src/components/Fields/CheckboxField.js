@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FieldContainer, Label } from "./_fieldStyles";
 
 function CheckboxField(props) {
   const [checkedItems, setCheckedItems] = useState(new Map());
@@ -18,11 +17,11 @@ function CheckboxField(props) {
   };
 
   return (
-    <FieldContainer>
-      <div className="label">{props.label}</div>
+    <div>
+      <label className="fw-bold">{props.label}</label>
       {props.options.map((opt, index) => {
         return (
-          <Label key={index}>
+          <label key={index}>
             <input
               type="checkbox"
               name={props.name + "-" + index}
@@ -32,13 +31,13 @@ function CheckboxField(props) {
               onChange={handleCheckItem}
             />
             {opt}
-          </Label>
+          </label>
         );
       })}
       {props.error && props.touched[props.name] && (
-        <div className="error">{props.error}</div>
+        <div className="text-danger">{props.error}</div>
       )}
-    </FieldContainer>
+    </div>
   );
 }
 

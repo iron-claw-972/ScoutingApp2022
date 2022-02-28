@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 
-function UploadField(props) {
+function HiddenField(props) {
   return (
-    <div>
-      <label className="font-weight-bold">{props.label}</label>
+    <div className="d-none">
+      <label className="fw-bold">{props.label}</label>
       <input
-        className="form-control-file"
-        type="file"
+        className="form-control"
+        type={props.type}
         name={props.name}
+        placeholder={props.placeholder}
         value={props.value}
         onBlur={props.handleBlur}
         onChange={props.onChange}
@@ -19,14 +20,13 @@ function UploadField(props) {
   );
 }
 
-UploadField.propTypes = {
+HiddenField.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.any,
   error: PropTypes.any,
   onChange: PropTypes.func.isRequired,
 };
 
-UploadField.defaultValue = {};
-
-export default UploadField;
+export default HiddenField;

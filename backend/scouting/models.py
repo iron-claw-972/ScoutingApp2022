@@ -2,6 +2,7 @@ from webbrowser import get
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from solo.models import SingletonModel
+from scouting.utils import get_default_match_form_schema, get_default_pit_form_schema
 
 from django.conf import settings
 
@@ -29,8 +30,8 @@ class PitData(models.Model):
     data = models.JSONField()
 
 class FormSchemas(SingletonModel):
-    match_form_schema = models.JSONField(default=list)
-    pit_form_schema = models.JSONField(default=list)
+    match_form_schema = models.JSONField(default=get_default_match_form_schema)
+    pit_form_schema = models.JSONField(default=get_default_pit_form_schema)
     
     def __str__(self):
         return "Form Schemas"
