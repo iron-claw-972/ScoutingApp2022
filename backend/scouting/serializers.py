@@ -76,10 +76,11 @@ class MatchDataSerializer(serializers.ModelSerializer):
 
     def to_representation(self, obj):
         representation = super().to_representation(obj)
-        for field in ["data", "team", "match", "event"]:
+        for field in ["data", "team", "match"]:
             field_representation = representation.pop(field)
             for key in field_representation:
                 representation[key] = field_representation[key]
+        representation.pop("event")
         return representation
     
 

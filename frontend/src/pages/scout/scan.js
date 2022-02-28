@@ -10,6 +10,7 @@ export default function ScanQRCode() {
   const [formErrors, setFormErrors] = useState()
 
   const router = useRouter()
+  var data
 
   useEffect(() => {
     var qrReader = document.getElementById("video")
@@ -21,7 +22,7 @@ export default function ScanQRCode() {
   }, [isScanned])
 
   useEffect(() => {
-    var data = Object.values(datas).find(obj => {
+    data = Object.values(datas).find(obj => {
       return obj.isType(scoutingData)
     })
     if (data) {

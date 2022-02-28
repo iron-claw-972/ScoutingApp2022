@@ -89,7 +89,7 @@ export default function PitScoutingForm() {
 
   return (
     <div className="">
-      <h1 className="text-center">Pit scout</h1>
+      <h1 className="text-center">Pit Scout</h1>
 
       { formSchema.length > 0 &&
         <DynamicForm

@@ -11,6 +11,7 @@ export default function MatchScoutingForm() {
   const [formSchema, setFormSchema] = useState([]);
   const [values, setValues] = useState({});
   const [submitStatus, setSubmitStatus] = useState();
+  const [submitError, setSubmitError] = useState("");
 
   var nextMatch = "";
   var data = datas.match
@@ -77,6 +78,7 @@ export default function MatchScoutingForm() {
         router.push("/")
       } else {
         console.log(err?.response?.data || err.request || err.message)
+        setSubmitError("Submit failed. Try again with an Internet connection or scan QR code with another device.")
       }
     }
   }, [values])
@@ -102,7 +104,7 @@ export default function MatchScoutingForm() {
       { submitStatus === false &&
         <div className="text-center">
           <p className="text-danger">
-            Submit failed. Try again with an Internet connection or scan QR code with another device.
+            {submitError}
           </p>
           <QRCode value={JSON.stringify(data.appendType(values))} style={{ margin: 10 }} />
         </div>

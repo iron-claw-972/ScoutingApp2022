@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import TextField from "./TextField";
 import HiddenField from "./HiddenField";
 import NumberField from "./NumberField";
+import NumberSpinnerField from "./NumberSpinnerField";
 import SelectField from "./SelectField";
 import TextAreaField from "./TextAreaField";
 import RadioButtonField from "./RadioButtonField";
@@ -12,6 +13,7 @@ const fieldMap = {
   text: TextField,
   hidden: HiddenField,
   number: NumberField,
+  numberspinner: NumberSpinnerField,
   select: SelectField,
   textarea: TextAreaField,
   radio: RadioButtonField,
@@ -29,6 +31,7 @@ function Fields(props) {
     handleBlur,
     handleChange,
     setFieldValue,
+    setFieldTouched,
   } = formikProps;
 
   const onChange = (e) => {
@@ -56,6 +59,7 @@ function Fields(props) {
         handleBlur={handleBlur}
         onChange={onChange}
         setFieldValue={setFieldValue}
+        setFieldTouched={setFieldTouched}
       />
     );
   });

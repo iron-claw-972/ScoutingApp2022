@@ -48,7 +48,7 @@ DEFAULT_MATCH_FORM_SCHEMA = [
     {
         "id": "auto_high_scored",
         "label": "Cargo scored in Upper Hub during Auto",
-        "type": "number",
+        "type": "numberspinner",
         "value": "0",
         "validationType": "number",
         "validations": [
@@ -60,7 +60,7 @@ DEFAULT_MATCH_FORM_SCHEMA = [
     {
         "id": "auto_low_scored",
         "label": "Cargo scored in Lower Hub during Auto",
-        "type": "number",
+        "type": "numberspinner",
         "value": "0",
         "validationType": "number",
         "validations": [
@@ -84,6 +84,13 @@ def get_default_match_form_schema():
     return DEFAULT_MATCH_FORM_SCHEMA
 
 BASE_PIT_FORM_SCHEMA = [
+    {
+        "id": "id",
+        "label": "ID",
+        "type": "hidden",
+        "validationType": "string",
+        "validations": [{"type": "required", "params": ["Required field"]}],
+    },
     {
         "id": "event_key",
         "label": "Event Key",
@@ -113,39 +120,6 @@ BASE_PIT_FORM_SCHEMA = [
 ]
 
 DEFAULT_PIT_FORM_SCHEMA = [
-    {
-        "id": "auto_high_scored",
-        "label": "Cargo scored in Upper Hub during Auto",
-        "type": "number",
-        "value": "0",
-        "validationType": "number",
-        "validations": [
-            {"type": "required", "params": ["Required field"]},
-            {"type": "integer", "params": ["Must be an integer"]},
-            {"type": "min", "params": [0, "Must be positive"]},
-        ],
-    },
-    {
-        "id": "auto_low_scored",
-        "label": "Cargo scored in Lower Hub during Auto",
-        "type": "number",
-        "value": "0",
-        "validationType": "number",
-        "validations": [
-            {"type": "required", "params": ["Required field"]},
-            {"type": "integer", "params": ["Must be an integer"]},
-            {"type": "min", "params": [0, "Must be positive"]},
-        ],
-    },
-    {
-        "id": "auto_notes",
-        "label": "Notes for Auto",
-        "type": "textarea",
-        "validationType": "string",
-        "validations": [
-            {"type": "required", "params": ["Required field"]},
-        ],
-    },
 ]
 
 def get_default_pit_form_schema():
