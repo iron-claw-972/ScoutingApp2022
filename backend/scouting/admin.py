@@ -16,6 +16,12 @@ class MatchDataAdmin(admin.ModelAdmin):
         models.JSONField: {'widget': JSONEditorWidget},
     }
 
+@admin.register(PitData)
+class PitDataAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget},
+    }
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     formfield_overrides = {

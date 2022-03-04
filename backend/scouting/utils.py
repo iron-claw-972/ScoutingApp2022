@@ -37,7 +37,7 @@ BASE_MATCH_FORM_SCHEMA = [
         "label": "Driver Station",
         "type": "radio",
         "validationType": "string",
-        "options": ["Red 1", "Red 2", "Red 3", "Blue 1", "Blue 2", "Blue 3"],
+        "options": ["Hanger Red", "Center Red", "Terminal Red", "Hanger Blue", "Center Blue", "Terminal Blue"],
         "validations": [
             {"type": "required", "params": ["Required field"]}
         ],
