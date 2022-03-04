@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from scouting.models import Event, Team, Match, MatchData, FormSchemas, Settings
+from scouting.models import Event, Team, Match, MatchData, FormSchemas, Settingsa, PitData
 from solo.admin import SingletonModelAdmin
 from django_json_widget.widgets import JSONEditorWidget
 
