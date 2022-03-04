@@ -27,20 +27,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("BACKEND_SECRET_KEY", "secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('ENV').lower() == "dev"
+# DEBUG = os.environ.get('ENV').lower() == "dev"
+DEBUG = True
 
-if DEBUG:
-    LOCALTUNNEL_SUBDOMAIN = os.environ.get("LOCALTUNNEL_SUBDOMAIN")
+LOCALTUNNEL_SUBDOMAIN = os.environ.get("LOCALTUNNEL_SUBDOMAIN")
 
 ALLOWED_HOSTS = [
     'backend',
     'localhost',
+    f'{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
 ]
-
-if DEBUG:
-    ALLOWED_HOSTS += [
-        f'{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
-    ]
 
 AUTH_USER_MODEL = "users.CustomUser"
 
@@ -70,12 +66,8 @@ DEFAULT_CURRENT_EVENT_KEY = os.environ.get('DEFAULT_CURRENT_EVENT_KEY')
 CSRF_TRUSTED_ORIGINS = [
     f"http://localhost:{BACKEND_PORT}",
     f"http://localhost:{APP_PORT}",
+    f'https://{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
 ] + list(filter(None, os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')))
-
-if DEBUG:
-    CSRF_TRUSTED_ORIGINS += [
-        f'https://{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
-    ]
 
 TBA_API_KEY = os.environ.get("TBA_API_KEY")
 TBA_WEBHOOK_SECRET = os.environ.get("TBA_WEBHOOK_SECRET")
@@ -115,10 +107,10 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
 ]
 
-if DEBUG:
-    INSTALLED_APPS += [
-        "django_extensions",
-    ]
+# if DEBUG:
+#     INSTALLED_APPS += [
+#         "django_extensions",
+#     ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

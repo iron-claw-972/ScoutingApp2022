@@ -26,6 +26,4 @@ class NextMatchView(APIView):
         next_match = latest_data.next_match.get("match_key")
         if not next_match:
             next_match = get_next_match()
-            if not next_match:
-                return Response(status=404)
         return Response({'next_match': next_match}, status=200)

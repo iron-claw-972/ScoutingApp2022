@@ -40,6 +40,7 @@ services:
       - DJANGO_SUPERUSER_USERNAME=${BACKEND_SU_USER}
       - DJANGO_SUPERUSER_PASSWORD=${BACKEND_SU_PASS}
       - DJANGO_SUPERUSER_EMAIL=${BACKEND_SU_EMAIL}
+      - LOCALTUNNEL_SUBDOMAIN
       - TBA_API_KEY
       - TBA_WEBHOOK_SECRET
       - CSRF_TRUSTED_ORIGINS
@@ -67,6 +68,17 @@ services:
     environment:
       - ENV=prod
       - NEXT_PUBLIC_TBA_API_KEY=${TBA_API_KEY}
+    depends_on:
+      - backend
+
+  localtunnel:
+    image: efrecon/localtunnel
+    container_name: scoutingapp2022_prod_localtunnel
+    links:
+      - nginx
+    command: --local-host nginx --port 80 --subdomain=${LOCALTUNNEL_SUBDOMAIN}
+    depends_on:
+      - nginx
 
 
 volumes:

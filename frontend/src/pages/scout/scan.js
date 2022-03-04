@@ -3,6 +3,7 @@ import { QrReader } from '@blackbox-vision/react-qr-reader';
 import axios from 'axios'
 import { Router, useRouter } from 'next/router'
 import { Data, datas } from "../../utils/localstorage";
+import Link from "next/link";
 
 export default function ScanQRCode() {
   const [isScanned, setIsScanned] = useState(false)
@@ -48,7 +49,7 @@ export default function ScanQRCode() {
   }
 
   return (
-    <>
+    <div className="text-center">
       <h1 className="text-center">Scan Scouting Data</h1>
       <div className="container">
         <div className="row">
@@ -61,6 +62,7 @@ export default function ScanQRCode() {
             }}
             className="mx-auto col-lg-6"
             scanDelay="10"
+            constraints={{facingMode: 'environment'}}
           />
 
           { isScanned &&
@@ -95,6 +97,11 @@ export default function ScanQRCode() {
           <p className="text-danger">{JSON.stringify(formErrors)}</p>
         </div>
       </div>
-    </>
+      <Link href="/">
+        <button className="btn btn-outline-warning">
+          Return to home
+        </button>
+      </Link>
+    </div>
   )
 }

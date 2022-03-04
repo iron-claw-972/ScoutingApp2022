@@ -14,7 +14,7 @@ function NumberSpinnerField(props) {
           }}
           onClick={() => {
             props.setFieldTouched(props.name)
-            props.setFieldValue(props.name, parseInt(props.value) - 1)
+            props.setFieldValue(props.name, (parseInt(props.value) ? parseInt(props.value) : 0) - 1)
           }}
         >
           <span className="fw-bold">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
@@ -37,7 +37,7 @@ function NumberSpinnerField(props) {
           }}
           onClick={() => {
             props.setFieldTouched(props.name)
-            props.setFieldValue(props.name, parseInt(props.value) + 1)
+            props.setFieldValue(props.name, (parseInt(props.value) ? parseInt(props.value) : 0) + 1)
           }}
         >
           <span className="fw-bold">&nbsp;&nbsp;+&nbsp;&nbsp;</span>

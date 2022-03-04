@@ -58,6 +58,8 @@ services:
     environment:
       - ENV=dev
       - NEXT_PUBLIC_TBA_API_KEY=${TBA_API_KEY}
+    depends_on:
+      - backend
 
   localtunnel:
     image: efrecon/localtunnel

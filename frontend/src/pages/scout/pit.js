@@ -88,25 +88,32 @@ export default function PitScoutingForm() {
   }
 
   return (
-    <div className="">
-      <h1 className="text-center">Pit Scout</h1>
+    <div className="text-center">
+      <div className="">
+        <h1 className="text-center">Pit Scout</h1>
 
-      { formSchema.length > 0 &&
-        <DynamicForm
-          fields={formSchema}
-          cbSubmit={handleSubmit}
-          onFormChange={handleFormChange}
-        />
-      }
+        { formSchema.length > 0 &&
+          <DynamicForm
+            fields={formSchema}
+            cbSubmit={handleSubmit}
+            onFormChange={handleFormChange}
+          />
+        }
 
-      { submitStatus === false &&
-        <div className="text-center">
-          <p className="text-danger">
-            Submit failed. Try again with an Internet connection or scan QR code with another device.
-          </p>
-          <QRCode value={JSON.stringify(data.appendType(values))} style={{ margin: 10 }} />
-        </div>
-      }
+        { submitStatus === false &&
+          <div className="text-center">
+            <p className="text-danger">
+              Submit failed. Try again with an Internet connection or scan QR code with another device.
+            </p>
+            <QRCode value={JSON.stringify(data.appendType(values))} style={{ margin: 10 }} />
+          </div>
+        }
+      </div>
+      <Link href="/">
+        <button className="btn btn-outline-warning">
+          Return to home
+        </button>
+      </Link>
     </div>
   )
 }

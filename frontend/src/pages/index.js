@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Scouting App 2022</h1>
+        <h1 className={styles.title}>972 Scouting App</h1>
 
         <div className={styles.grid}>
           <Link href="/scout/match">
@@ -33,23 +33,30 @@ export default function Home() {
           <Link href="/scout/scan">
             <a className={styles.card}>
               <h2>Scan Scouting Data</h2>
-              <p>Get to it, you lazy bastard</p>
+              <p>In case of no wifi</p>
             </a>
           </Link>
 
           <Link href="/display/match">
             <a className={styles.card}>
               <h2>Display Match Scouting Data</h2>
-              <p>Lookie</p>
+              <p>Display or export</p>
             </a>
           </Link>
 
           <Link href="/display/pit">
             <a className={styles.card}>
               <h2>Display Pit Scouting Data</h2>
-              <p>Lookie</p>
+              <p>Display or export</p>
             </a>
           </Link>
+
+          {/* <Link href="/display/publicity">
+            <a className={styles.card}>
+              <h2>Publicity board</h2>
+              <p>All Hail Donk!</p>
+            </a>
+          </Link> */}
         </div>
       </main>
 

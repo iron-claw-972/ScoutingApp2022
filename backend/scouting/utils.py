@@ -49,10 +49,8 @@ DEFAULT_MATCH_FORM_SCHEMA = [
         "id": "auto_high_scored",
         "label": "Cargo scored in Upper Hub during Auto",
         "type": "numberspinner",
-        "value": "0",
         "validationType": "number",
         "validations": [
-            {"type": "required", "params": ["Required field"]},
             {"type": "integer", "params": ["Must be an integer"]},
             {"type": "min", "params": [0, "Must be positive"]},
         ],
@@ -61,10 +59,8 @@ DEFAULT_MATCH_FORM_SCHEMA = [
         "id": "auto_low_scored",
         "label": "Cargo scored in Lower Hub during Auto",
         "type": "numberspinner",
-        "value": "0",
         "validationType": "number",
         "validations": [
-            {"type": "required", "params": ["Required field"]},
             {"type": "integer", "params": ["Must be an integer"]},
             {"type": "min", "params": [0, "Must be positive"]},
         ],
@@ -75,7 +71,44 @@ DEFAULT_MATCH_FORM_SCHEMA = [
         "type": "textarea",
         "validationType": "string",
         "validations": [
-            {"type": "required", "params": ["Required field"]},
+        ],
+    },
+
+    {
+        "id": "teleop_high_scored",
+        "label": "Cargo scored in Upper Hub during Teleop",
+        "type": "numberspinner",
+        "validationType": "number",
+        "validations": [
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [0, "Must be positive"]},
+        ],
+    },
+    {
+        "id": "teleop_low_scored",
+        "label": "Cargo scored in Lower Hub during Teleop",
+        "type": "numberspinner",
+        "validationType": "number",
+        "validations": [
+            {"type": "integer", "params": ["Must be an integer"]},
+            {"type": "min", "params": [0, "Must be positive"]},
+        ],
+    },
+    {
+        "id": "teleop_notes",
+        "label": "Notes for Teleop",
+        "type": "textarea",
+        "validationType": "string",
+        "validations": [
+        ],
+    },
+    {
+        "id": "climb_level",
+        "label": "Hanger Climb Level",
+        "type": "radio",
+        "validationType": "string",
+        "options": ["Low", "Mid", "High", "Traversal"],
+        "validations": [
         ],
     },
 ]
@@ -120,6 +153,14 @@ BASE_PIT_FORM_SCHEMA = [
 ]
 
 DEFAULT_PIT_FORM_SCHEMA = [
+    {
+        "id": "pit_notes",
+        "label": "Notes about Pit",
+        "type": "textarea",
+        "validationType": "string",
+        "validations": [
+        ],
+    },
 ]
 
 def get_default_pit_form_schema():

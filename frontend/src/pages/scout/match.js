@@ -90,25 +90,32 @@ export default function MatchScoutingForm() {
   }
 
   return (
-    <div className="">
-      <h1 className="text-center">Scout a match</h1>
+    <div className="text-center">
+      <div className="">
+        <h1 className="text-center">Scout a match</h1>
 
-      { formSchema.length > 0 &&
-        <DynamicForm
-          fields={formSchema}
-          cbSubmit={handleSubmit}
-          onFormChange={handleFormChange}
-        />
-      }
+        { formSchema.length > 0 &&
+          <DynamicForm
+            fields={formSchema}
+            cbSubmit={handleSubmit}
+            onFormChange={handleFormChange}
+          />
+        }
 
-      { submitStatus === false &&
-        <div className="text-center">
-          <p className="text-danger">
-            {submitError}
-          </p>
-          <QRCode value={JSON.stringify(data.appendType(values))} style={{ margin: 10 }} />
-        </div>
-      }
+        { submitStatus === false &&
+          <div className="text-center">
+            <p className="text-danger">
+              {submitError}
+            </p>
+            <QRCode value={JSON.stringify(data.appendType(values))} style={{ margin: 10 }} />
+          </div>
+        }
+      </div>
+      <Link href="/">
+        <button className="btn btn-outline-warning">
+          Return to home
+        </button>
+      </Link>
     </div>
   )
 }
