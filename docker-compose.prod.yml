@@ -10,7 +10,7 @@ services:
       - media:/app/nginx/media
     ports:
       - "${APP_PORT}:80"
-    depends_ON:
+    depends_on:
       - frontend
 
   db:
