@@ -27,16 +27,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("BACKEND_SECRET_KEY", "secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('ENV').lower() == "dev"
-DEBUG = True
+DEBUG = os.environ.get('ENV').lower() == "dev"
+# DEBUG = True
 
 LOCALTUNNEL_SUBDOMAIN = os.environ.get("LOCALTUNNEL_SUBDOMAIN")
 
-ALLOWED_HOSTS = [
-    'backend',
-    'localhost',
-    f'{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
-]
+# ALLOWED_HOSTS = [
+#     'backend',
+#     'localhost',
+#     f'{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
+# ]
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = "users.CustomUser"
 
@@ -46,7 +47,6 @@ BACKEND_PORT = os.environ.get("BACKEND_PORT")
 APP_PORT = os.environ.get("APP_PORT")
 
 FRC_TEAM_NUMBER = int(os.environ.get("FRC_TEAM_NUMBER"))
-FRC_YEAR = int(os.environ.get("FRC_YEAR"))
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -56,7 +56,8 @@ REST_FRAMEWORK = {
 
 REST_USE_JWT = True
 
-CORS_ORIGIN_ALLOW_ALL = DEBUG
+# CORS_ORIGIN_ALLOW_ALL = DEBUG
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [ 
   'http://frontend:3000',
 ]
@@ -66,7 +67,7 @@ DEFAULT_CURRENT_EVENT_KEY = os.environ.get('DEFAULT_CURRENT_EVENT_KEY')
 CSRF_TRUSTED_ORIGINS = [
     f"http://localhost:{BACKEND_PORT}",
     f"http://localhost:{APP_PORT}",
-    f'https://{LOCALTUNNEL_SUBDOMAIN}.loca.lt',
+    f'https://*.loca.lt',
 ] + list(filter(None, os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')))
 
 TBA_API_KEY = os.environ.get("TBA_API_KEY")

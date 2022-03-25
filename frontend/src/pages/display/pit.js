@@ -64,6 +64,7 @@ export default function DisplayScoutingData() {
         ref={hotTableComponent}
         multiColumnSorting={true}
         filters={true}
+        rowSorting={true}
         fixedRowsTop={1}
         readOnly={true}
         rowHeaders={true}

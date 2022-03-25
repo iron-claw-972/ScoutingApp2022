@@ -38,7 +38,6 @@ services:
       - APP_PORT
       - DEFAULT_CURRENT_EVENT_KEY
       - FRC_TEAM_NUMBER
-      - FRC_YEAR
     ports:
       - "${BACKEND_PORT}:8000"
     depends_on:
