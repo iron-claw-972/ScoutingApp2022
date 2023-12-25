@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import { datas } from "../../utils/localstorage";
 import Link from "next/link";
 import { ObjectSchema } from "yup";
+import { Grid } from 'gridjs-react';
+import "gridjs/dist/theme/mermaid.css";
 
 export default function DisplayScoutingData() {
   const [scoutingDataKeys, setScoutingDataKeys] = useState([])
@@ -24,9 +26,16 @@ export default function DisplayScoutingData() {
       var [success, form_schema] = await data.getFormSchema()
       if (success) {
         scouting_data_keys = scouting_data_keys.map((key) => {
-          return form_schema.find((field) => {
-            return field.id === key
-          })?.label
+          // for (var ff in form_schema) {
+          //   console.log(form_schema[ff])
+          //   if (form_schema[ff].id === key) {
+          //     return form_schema[ff]?.label
+          //   }
+          // }
+          // return form_schema.find((field) => {
+          //   console.log(field.id)
+          //   return field.id === key
+          // })?.label
         })
       }
       setScoutingDataKeys(scouting_data_keys)
@@ -43,7 +52,7 @@ export default function DisplayScoutingData() {
   return (
     <div className="m-2 text-center">
       <h1 className="text-center">View Match Scouting Data</h1>
-      { hotTableComponent !== null && scoutingData.length > 0 &&
+      { scoutingData.length > 0 &&
         <button className="btn btn-primary" onClick={() => {
           import('xlsx').then(XLSX => {
             var sheet_data = [scoutingDataKeys, ...scoutingData.map(obj => Object.values(obj))]
@@ -57,7 +66,16 @@ export default function DisplayScoutingData() {
           Export
         </button>
       }
-      <DisplayTable
+      <Grid
+        data={scoutingData}
+        columns={scoutingDataKeys}
+        pagination={{
+          limit: 15,
+        }}
+        search={true}
+        sort={true}
+      />
+      {/* <DisplayTable
         data={scoutingData}
         dropdownMenu={true}
         licenseKey="non-commercial-and-evaluation"
@@ -72,7 +90,7 @@ export default function DisplayScoutingData() {
         height="auto"
         width="auto"
         className="m-2"
-      />
+      /> */}
       <Link href="/">
         <button className="btn btn-outline-warning">
           Return to home

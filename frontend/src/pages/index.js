@@ -54,7 +54,7 @@ export default function Home() {
           {/* <Link href="/display/publicity">
             <a className={styles.card}>
               <h2>Publicity board</h2>
-              <p>All Hail Donk!</p>
+              <p>All Hail Marinus!</p>
             </a>
           </Link> */}
         </div>
